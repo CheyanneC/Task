@@ -115,11 +115,21 @@ public class TaskGUI extends javax.swing.JFrame
         });
 
         btnlast.setText(">>");
+        btnlast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnlastActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Program");
 
         mnuall.setSelected(true);
         mnuall.setText("Show All Tasks");
+        mnuall.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuallActionPerformed(evt);
+            }
+        });
         jMenu1.add(mnuall);
 
         mnuexit.setSelected(true);
@@ -132,10 +142,20 @@ public class TaskGUI extends javax.swing.JFrame
 
         mnureplace.setSelected(true);
         mnureplace.setText("Replace This As Current Task");
+        mnureplace.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnureplaceActionPerformed(evt);
+            }
+        });
         jMenu2.add(mnureplace);
 
         mnuremove.setSelected(true);
         mnuremove.setText("Remove Current Task");
+        mnuremove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuremoveActionPerformed(evt);
+            }
+        });
         jMenu2.add(mnuremove);
 
         mnurestore.setSelected(true);
@@ -261,25 +281,25 @@ public class TaskGUI extends javax.swing.JFrame
     }//GEN-LAST:event_mnuafterActionPerformed
 
     private void mnubeforeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnubeforeActionPerformed
-        String nm = txtname.getText();
-        String d = txtinfo.getText();
-        
-        if(t.validate() == false)
-        {
-            JOptionPane.showMessageDialog(this, "ERROR - Must enter in all information");
-            return;
-        }
-        
-        it.add(t);
-        it.previous();
-        
-        if(tottask == 0) curtask = 1;
-        tottask ++;
-        
-        txtcur.setText("" + curtask);
-        txttot.setText("" + tottask);
-        
-        JOptionPane.showMessageDialog(this, "Task Added");
+//        String nm = txtname.getText();
+//        String d = txtinfo.getText();
+//        
+//        if(t.validate() == false)
+//        {
+//            JOptionPane.showMessageDialog(this, "ERROR - Must enter in all information");
+//            return;
+//        }
+//        
+//        it.add(t);
+//        it.previous();
+//        
+//        if(tottask == 0) curtask = 1;
+//        tottask ++;
+//        
+//        txtcur.setText("" + curtask);
+//        txttot.setText("" + tottask);
+//        
+//        JOptionPane.showMessageDialog(this, "Task Added");
     }//GEN-LAST:event_mnubeforeActionPerformed
 
     private void btnnextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnextActionPerformed
@@ -298,21 +318,110 @@ public class TaskGUI extends javax.swing.JFrame
     }//GEN-LAST:event_btnnextActionPerformed
 
     private void btnprevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnprevActionPerformed
-        if(curtask == 1) return;
+//        if(curtask == 1) return;
+//        
+//        curtask --;
+//        txtcur.setText("" + curtask);
+//        
+//        it.previous();
+//
+//        t = it.next();
+//        
+//        it.previous();
+//        
+//        txtname.setText(t.getName());
+//        txtinfo.setText(t.getDescription());
         
-        curtask --;
-        txtcur.setText("" + curtask);
-        
-        it.previous();
+    }//GEN-LAST:event_btnprevActionPerformed
 
-        t = it.next();
+    private void btnlastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlastActionPerformed
+        if(curtask == tottask) return;
         
-        it.previous();
+        while(it.hasNext()) 
+            it.next();
+        
+        t = it.previous();
+        
+        curtask = tottask;
+        
+        txtcur.setText("" + curtask);
         
         txtname.setText(t.getName());
         txtinfo.setText(t.getDescription());
+    }//GEN-LAST:event_btnlastActionPerformed
+
+    private void mnureplaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnureplaceActionPerformed
+        if(tottask == 0) 
+        {
+            JOptionPane.showMessageDialog(this, "ERROR - No task to replace");
+            return;
+        }
         
-    }//GEN-LAST:event_btnprevActionPerformed
+        String nm = txtname.getText();
+        String d = txtinfo.getText();
+        t = new Task(nm, d);
+        
+        if(t.validate() == false)
+        {
+            JOptionPane.showMessageDialog(this, "ERROR - Must enter in all information");
+            return;
+        }
+        
+        it.next();
+        it.set(t);
+        it.previous();
+    }//GEN-LAST:event_mnureplaceActionPerformed
+
+    private void mnuremoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuremoveActionPerformed
+        if(tottask == 0) return;
+        
+        it.next();
+        it.remove();
+        
+        tottask --;
+        txttot.setText("" + tottask);
+        
+        if(tottask == 0)
+        {
+            txtname.setText("");
+            txtinfo.setText("");
+            
+            curtask = 0;
+            txtcur.setText("n/a");
+            
+            return;
+        }
+        
+        else if(curtask > 1)
+        {
+            t = it.previous();
+            
+            curtask --;
+            txtcur.setText("" + curtask);
+        }
+        
+        else
+        {
+            it.next();
+            
+            t = it.previous();
+        }
+        
+        txtname.setText(t.getName());
+        txtinfo.setText(t.getDescription());
+    }//GEN-LAST:event_mnuremoveActionPerformed
+
+    private void mnuallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuallActionPerformed
+        String result = "";
+        
+        for(int x = 0; x < list.size(); x ++)
+        {
+            t = (Task)list.get(x);
+            result += "TASK " + (x + 1) + ":\n" + t.toString() + "\n";
+        }
+        
+        JOptionPane.showMessageDialog(this, result);
+    }//GEN-LAST:event_mnuallActionPerformed
 
     public static void main(String args[]) 
     {

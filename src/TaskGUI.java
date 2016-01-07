@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 import javax.swing.JOptionPane;
 
+//Add task before is fucked
+
 public class TaskGUI extends javax.swing.JFrame 
 {
     ArrayList list;
@@ -170,10 +172,20 @@ public class TaskGUI extends javax.swing.JFrame
 
         mnurestore.setSelected(true);
         mnurestore.setText("Restore Current Task to Screen");
+        mnurestore.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnurestoreActionPerformed(evt);
+            }
+        });
         jMenu2.add(mnurestore);
 
         mnuclear.setSelected(true);
         mnuclear.setText("Clear Screen");
+        mnuclear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuclearActionPerformed(evt);
+            }
+        });
         jMenu2.add(mnuclear);
 
         jMenuBar1.add(jMenu2);
@@ -291,25 +303,25 @@ public class TaskGUI extends javax.swing.JFrame
     }//GEN-LAST:event_mnuafterActionPerformed
 
     private void mnubeforeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnubeforeActionPerformed
-//        String nm = txtname.getText();
-//        String d = txtinfo.getText();
-//        
-//        if(t.validate() == false)
-//        {
-//            JOptionPane.showMessageDialog(this, "ERROR - Must enter in all information");
-//            return;
-//        }
-//        
-//        it.add(t);
-//        it.previous();
-//        
-//        if(tottask == 0) curtask = 1;
-//        tottask ++;
-//        
-//        txtcur.setText("" + curtask);
-//        txttot.setText("" + tottask);
-//        
-//        JOptionPane.showMessageDialog(this, "Task Added");
+        String nm = txtname.getText();
+        String d = txtinfo.getText();
+        
+        if(t.validate() == false)
+        {
+            JOptionPane.showMessageDialog(this, "ERROR - Must enter in all information");
+            return;
+        }
+        
+        it.add(t);
+        it.previous();
+        
+        if(tottask == 0) curtask = 1;
+        tottask ++;
+        
+        txtcur.setText("" + curtask);
+        txttot.setText("" + tottask);
+        
+        JOptionPane.showMessageDialog(this, "Task Added");
     }//GEN-LAST:event_mnubeforeActionPerformed
 
     private void btnnextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnextActionPerformed
@@ -452,6 +464,16 @@ public class TaskGUI extends javax.swing.JFrame
     private void mnuexitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuexitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_mnuexitActionPerformed
+
+    private void mnurestoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnurestoreActionPerformed
+        txtname.setText(t.getName());
+        txtinfo.setText(t.getDescription());
+    }//GEN-LAST:event_mnurestoreActionPerformed
+
+    private void mnuclearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuclearActionPerformed
+        txtname.setText("");
+        txtinfo.setText("");
+    }//GEN-LAST:event_mnuclearActionPerformed
 
     public static void main(String args[]) 
     {

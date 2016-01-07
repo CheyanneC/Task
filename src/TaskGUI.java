@@ -99,6 +99,11 @@ public class TaskGUI extends javax.swing.JFrame
         );
 
         btnfirst.setText("<<");
+        btnfirst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnfirstActionPerformed(evt);
+            }
+        });
 
         btnprev.setText("<");
         btnprev.addActionListener(new java.awt.event.ActionListener() {
@@ -134,6 +139,11 @@ public class TaskGUI extends javax.swing.JFrame
 
         mnuexit.setSelected(true);
         mnuexit.setText("Exit");
+        mnuexit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuexitActionPerformed(evt);
+            }
+        });
         jMenu1.add(mnuexit);
 
         jMenuBar1.add(jMenu1);
@@ -318,19 +328,19 @@ public class TaskGUI extends javax.swing.JFrame
     }//GEN-LAST:event_btnnextActionPerformed
 
     private void btnprevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnprevActionPerformed
-//        if(curtask == 1) return;
-//        
-//        curtask --;
-//        txtcur.setText("" + curtask);
-//        
-//        it.previous();
-//
-//        t = it.next();
-//        
-//        it.previous();
-//        
-//        txtname.setText(t.getName());
-//        txtinfo.setText(t.getDescription());
+        if(curtask == 1) return;
+        
+        curtask --;
+        txtcur.setText("" + curtask);
+        
+        it.previous();
+
+        t = it.next();
+        
+        it.previous();
+        
+        txtname.setText(t.getName());
+        txtinfo.setText(t.getDescription());
         
     }//GEN-LAST:event_btnprevActionPerformed
 
@@ -422,6 +432,26 @@ public class TaskGUI extends javax.swing.JFrame
         
         JOptionPane.showMessageDialog(this, result);
     }//GEN-LAST:event_mnuallActionPerformed
+
+    private void btnfirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnfirstActionPerformed
+        if(curtask == 1) return;
+        
+        while(it.hasPrevious()) 
+            it.previous();
+        
+        t = it.next();
+        
+        curtask = 1;
+        
+        txtcur.setText("" + curtask);
+        
+        txtname.setText(t.getName());
+        txtinfo.setText(t.getDescription());
+    }//GEN-LAST:event_btnfirstActionPerformed
+
+    private void mnuexitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuexitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_mnuexitActionPerformed
 
     public static void main(String args[]) 
     {

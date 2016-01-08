@@ -312,10 +312,13 @@ public class TaskGUI extends javax.swing.JFrame
             return;
         }
         
+        //new add is not pushing everything behind it back one - not adding as first task
+        //not adding if there is no tasks
         it.add(t);
         it.previous();
         
         if(tottask == 0) curtask = 1;
+        
         tottask ++;
         
         txtcur.setText("" + curtask);
